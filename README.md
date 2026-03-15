@@ -1,3 +1,5 @@
+![clidoro](https://raw.githubusercontent.com/ahmadawais/clidoro/main/.github/clidoro.png)
+
 # clidoro
 
 Pomodoro timer for the terminal. Built for humans and AI agents.
