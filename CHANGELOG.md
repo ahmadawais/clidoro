@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.0](https://github.com/ahmadawais/clidoro/compare/1.0.0...1.1.0) (2026-03-15)
+
+### Improvements
+
+* rename complete-task to done, remove view command ([e732022](https://github.com/ahmadawais/clidoro/commit/e732022d974e4848fec883b8a21601b17e7f814f))
+
 ## 1.0.0 (2026-03-15)
 
 ### Features

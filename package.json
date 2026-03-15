@@ -1,6 +1,6 @@
 {
   "name": "clidoro",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A Pomodoro CLI using Termini for terminal UI",
   "repository": {
     "type": "git",
