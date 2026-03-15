@@ -1,0 +1,26 @@
+{
+  "name": "clidoro",
+  "version": "0.0.1",
+  "description": "A Pomodoro CLI using Termini for terminal UI",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "clidoro": "dist/cli.js"
+  },
+  "scripts": {
+    "dev": "tsx src/cli.ts",
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "commander": "^12.1.0",
+    "terminui": "^0.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.0",
+    "vitest": "^1.1.0"
+  }
+}
