@@ -7,8 +7,16 @@ Pomodoro timer for the terminal. Built for humans and AI agents.
 ## Install
 
 ```bash
-pnpm install
-pnpm run build
+npx clidoro
+```
+Or globally:
+
+```bash
+npm i -g clidoro
+```
+For agents, use skills
+```bash
+npx skills add ahmadawais/clidoro
 ```
 
 ## Interactive Mode (default)
