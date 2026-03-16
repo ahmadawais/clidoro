@@ -36,6 +36,9 @@ const c = {
 
 type Mode = 'tasks' | 'presets' | 'add' | 'session';
 
+const backspaceKeys = new Set(['\u007f', '\u0008', '\b']);
+const deletePreviousWordKeys = new Set(['\u0017', '\u001b\u007f', '\u001b\u0008', '\u001b\b']);
+
 interface TUIState {
   selectedIndex: number;
   running: boolean;
@@ -48,6 +51,16 @@ interface TUIState {
 
 // Strip ANSI codes to get visible character count
 const visLen = (s: string) => s.replace(/\x1b\[[0-9;]*m/g, '').length;
+
+export const deletePreviousWord = (input: string): string => {
+  const withoutTrailingWhitespace = input.replace(/\s+$/, '');
+  if (!withoutTrailingWhitespace) return '';
+
+  const lastWordStart = withoutTrailingWhitespace.search(/\S+$/);
+  return lastWordStart === -1 ? '' : withoutTrailingWhitespace.slice(0, lastWordStart);
+};
+
+export const isDeletePreviousWordKey = (key: string): boolean => deletePreviousWordKeys.has(key);
 
 // Truncate a string with ANSI codes to maxVisible characters
 const truncate = (s: string, maxVisible: number): string => {
@@ -108,7 +121,7 @@ export const runInteractiveTUI = async (): Promise<void> => {
   const getControls = (): string => {
     switch (tuiState.mode) {
       case 'add':
-        return `${key('enter')}${c.dim} save${c.reset}  ${key('esc')}${c.dim} cancel${c.reset}`;
+        return `${key('enter')}${c.dim} save${c.reset}  ${key('ctrl+w')}${c.dim} del word${c.reset}  ${key('esc')}${c.dim} cancel${c.reset}`;
       case 'presets':
         return `${key('↑↓')}${c.dim} select${c.reset}  ${key('enter')}${c.dim} use${c.reset}  ${key('esc')}${c.dim} back${c.reset}`;
       case 'session': {
@@ -316,7 +329,9 @@ export const runInteractiveTUI = async (): Promise<void> => {
         }
         tuiState.mode = 'tasks';
         tuiState.addInput = '';
-      } else if (key === '\u007f' || key === '\u0008' || key === '\b') {
+      } else if (isDeletePreviousWordKey(key)) {
+        tuiState.addInput = deletePreviousWord(tuiState.addInput);
+      } else if (backspaceKeys.has(key)) {
         tuiState.addInput = tuiState.addInput.slice(0, -1);
       } else if (key.length === 1 && !key.startsWith('\u001b')) {
         tuiState.addInput += key;
